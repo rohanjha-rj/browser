@@ -45,6 +45,40 @@ A sleek, state-of-the-art desktop web browser built with **Python 3**, **PyQt5**
 
 ---
 
+## ☁️ Deployment & Distribution Options
+
+### 1. Deploy Showcase Landing Page on Vercel
+This repository includes a dedicated landing page in `web/` configured with `vercel.json`.
+
+**Deploy via Vercel CLI:**
+```bash
+npx vercel
+```
+Or simply import your repository to [vercel.com](https://vercel.com) and it will deploy the showcase site automatically.
+
+---
+
+### 2. Package as a Standalone Windows .exe (PyInstaller)
+Package the desktop application so it can run on any Windows PC without installing Python:
+
+```bash
+python build_exe.py
+# Or double-click build.bat
+```
+The output executable will be created in `dist/MyCoolBrowser/MyCoolBrowser.exe`.
+
+---
+
+### 3. Automated GitHub Releases (CI/CD)
+Whenever you create and push a git tag (e.g. `v1.0.0`), GitHub Actions automatically builds the `.exe` and attaches `MyCoolBrowser-Windows.zip` to the release:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+---
+
 ## ⌨️ Keyboard Shortcuts Reference
 
 | Shortcut | Feature / Action |
@@ -77,26 +111,23 @@ A sleek, state-of-the-art desktop web browser built with **Python 3**, **PyQt5**
 browser/
 ├── main.py              # Application entry point
 ├── requirements.txt     # Python dependencies
+├── build_exe.py         # PyInstaller Windows .exe builder
+├── build.bat            # One-click Windows build batch file
+├── vercel.json          # Vercel deployment configuration
 ├── .gitignore           # Git ignore rules
 ├── README.md            # Complete documentation & shortcut guide
-└── src/                 # Modular application components
+├── .github/
+│   └── workflows/
+│       └── release.yml  # GitHub Actions automated release builder
+├── web/                 # Vercel landing page showcase
+│   ├── index.html       # Showcase HTML with live mockup
+│   └── style.css        # Glassmorphic landing page styles
+└── src/                 # Modular browser engine components
     ├── __init__.py      # Package indicator
-    ├── config.py        # Settings & Interactive Start Page template
+    ├── config.py        # Settings & Theme-aware Start Page
     ├── storage.py       # Bookmarks & History JSON managers
     ├── styles.py        # Dynamic Multi-Theme & Accent QSS generator
     ├── adblocker.py     # Request interceptor for ads and trackers
     ├── dialogs.py       # Command Palette, Find-in-page, Downloads, Themes
     └── browser_window.py# Main window, Tab engine, and feature orchestration
-```
-
----
-
-## 🚀 Installation & Running
-
-```bash
-# 1. Install dependencies
-pip install -r requirements.txt
-
-# 2. Run the browser
-python main.py
 ```

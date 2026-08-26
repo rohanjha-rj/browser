@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cool Browser Pro - Fast, Private & Modern Desktop Browser</title>
+    <meta name="description" content="A next-generation desktop web browser built with Python, PyQt5, and Chromium engine featuring multi-tabs, ad-blocking, split-screen, and customizable themes.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🌐</span>
+                <span class="logo-text">My Cool Browser <span class="badge">Pro</span></span>
+            </div>
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#shortcuts">Shortcuts</a>
+                <a href="#preview">Preview</a>
+                <a href="#download" class="nav-btn">Download .exe</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-badge">🚀 Version 1.0.0 is Live</div>
+        <h1 class="hero-title">Browse the web with <span class="gradient-text">speed & elegance</span>.</h1>
+        <p class="hero-subtitle">
+            A state-of-the-art desktop web browser built with Python, PyQt5, and Chromium. 
+            Equipped with built-in ad-blocking, command palette, multi-tab workflows, split-view, and customizable themes.
+        </p>
+        <div class="hero-actions">
+            <a href="#download" class="btn btn-primary">
+                <span>⬇️ Download for Windows</span>
+                <small>64-bit .exe Installer</small>
+            </a>
+            <a href="https://github.com" target="_blank" class="btn btn-secondary">
+                <span>🐙 View on GitHub</span>
+                <small>Open Source Repo</small>
+            </a>
+        </div>
+    </section>
+
+    <!-- Interactive Browser Preview Mockup -->
+    <section class="preview-section" id="preview">
+        <div class="browser-mockup">
+            <!-- Mock Titlebar -->
+            <div class="mock-titlebar">
+                <div class="window-controls">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="mock-tab-strip">
+                    <div class="mock-tab active">
+                        <span>🌐</span>
+                        <span>New Tab</span>
+                        <span class="close-x">✕</span>
+                    </div>
+                    <div class="mock-tab">
+                        <span>🐙</span>
+                        <span>GitHub</span>
+                        <span class="close-x">✕</span>
+                    </div>
+                    <button class="mock-new-tab">＋</button>
+                </div>
+            </div>
+            <!-- Mock Navbar -->
+            <div class="mock-navbar">
+                <div class="mock-nav-btns">
+                    <button>◀</button>
+                    <button>▶</button>
+                    <button>🔄</button>
+                    <button>🏠</button>
+                </div>
+                <div class="mock-omnibox">
+                    <span class="mock-lock">🔒</span>
+                    <span class="mock-url">https://www.google.com</span>
+                    <span class="mock-shield">🛡️</span>
+                    <span class="mock-star">★</span>
+                </div>
+                <div class="mock-actions">
+                    <button class="pill-btn">⚡ Ctrl+K</button>
+                    <button class="pill-btn">🔲 Split</button>
+                    <button class="pill-btn">📑 Sidebar</button>
+                    <button>⋮</button>
+                </div>
+            </div>
+            <!-- Mock Bookmarks -->
+            <div class="mock-bookmarks">
+                <span class="bm-star">★</span>
+                <span class="bm-item">Google</span>
+                <span class="bm-item">GitHub</span>
+                <span class="bm-item">YouTube</span>
+                <span class="bm-item">Reddit</span>
+                <span class="bm-item">Wikipedia</span>
+            </div>
+            <!-- Mock View Content -->
+            <div class="mock-web-view">
+                <div class="mock-clock">12:00</div>
+                <div class="mock-date">Thursday, August 27</div>
+                <div class="mock-search-bar">
+                    <span>🔍</span>
+                    <span>Search with Google or enter URL...</span>
+                </div>
+                <div class="mock-shortcuts">
+                    <div class="card">🌐 Google</div>
+                    <div class="card">▶️ YouTube</div>
+                    <div class="card">🐙 GitHub</div>
+                    <div class="card">💬 ChatGPT</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Grid -->
+    <section class="features" id="features">
+        <h2 class="section-title">Engineered with <span class="gradient-text">10 Power Features</span></h2>
+        <div class="grid">
+            <div class="feature-card">
+                <div class="icon">📑</div>
+                <h3>Multi-Tab System</h3>
+                <p>Seamless horizontal or Arc-style vertical sidebar tabs with double-click open and closed tabs recovery.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">⚡</div>
+                <h3>Spotlight Command Palette</h3>
+                <p>Press <code>Ctrl + K</code> to instantly jump between open tabs, search bookmarks, history, or execute browser commands.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🛡️</div>
+                <h3>Built-in Privacy Shield</h3>
+                <p>Automatic ad & tracker blocker powered by request interception, keeping your browsing clean and lightning fast.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🔲</div>
+                <h3>Split-Screen Dual View</h3>
+                <p>Browse two websites side-by-side in a single window with synchronized controls for peak multitasking.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🌗</div>
+                <h3>Dynamic Multi-Themes</h3>
+                <p>Easily switch between Cyber Dark, OLED Pure Black, Modern Light, and Cyberpunk Neon with customizable accent colors.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🕶️</div>
+                <h3>Incognito Private Window</h3>
+                <p>Private browsing sessions with zero history, cache, or cookies saved to disk.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shortcuts Table -->
+    <section class="shortcuts" id="shortcuts">
+        <h2 class="section-title">Power User <span class="gradient-text">Keyboard Shortcuts</span></h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Shortcut</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>Ctrl + K</code></td><td>Spotlight Command Palette</td></tr>
+                    <tr><td><code>Ctrl + F</code></td><td>Floating In-Page Search Bar</td></tr>
+                    <tr><td><code>Ctrl + J</code></td><td>Downloads Hub Drawer</td></tr>
+                    <tr><td><code>Ctrl + Shift + N</code></td><td>New Incognito Private Window</td></tr>
+                    <tr><td><code>Ctrl + Alt + S</code></td><td>Toggle Split-Screen Dual View</td></tr>
+                    <tr><td><code>Ctrl + T</code> / <code>Ctrl + W</code></td><td>New Tab / Close Active Tab</td></tr>
+                    <tr><td><code>Ctrl + Shift + T</code></td><td>Reopen Last Closed Tab</td></tr>
+                    <tr><td><code>Ctrl + D</code> / <code>Ctrl + B</code></td><td>Bookmark Page / Toggle Bookmarks Bar</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="download-section" id="download">
+        <div class="download-box">
+            <h2>Ready to experience your new browser?</h2>
+            <p>Download the standalone Windows executable or clone the repository to run from source.</p>
+            <div class="download-btns">
+                <a href="https://github.com" class="btn btn-primary">⬇️ Download Standalone .exe (v1.0.0)</a>
+                <a href="https://github.com" class="btn btn-secondary">📦 Clone GitHub Repository</a>
+            </div>
+            <div class="run-code">
+                <code>pip install -r requirements.txt && python main.py</code>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Built with ❤️ using Python, PyQt5 & Chromium • Deployable anywhere</p>
+    </footer>
+</body>
+</html>
