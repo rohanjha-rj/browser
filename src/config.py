@@ -12,6 +12,7 @@ SETTINGS_FILE = os.path.join(DATA_DIR, "settings.json")
 def get_start_page_html(theme="dark", accent="indigo"):
     # Theme color configuration for Start Page
     accent_hexes = {
+        "bronze": "#9e6b43",
         "indigo": "#6366f1",
         "cyan": "#06b6d4",
         "emerald": "#10b981",
@@ -19,9 +20,20 @@ def get_start_page_html(theme="dark", accent="indigo"):
         "sunset": "#f59e0b",
         "purple": "#a855f7"
     }
-    primary = accent_hexes.get(accent, "#6366f1")
+    primary = accent_hexes.get(accent, "#9e6b43" if theme == "beige" else "#6366f1")
 
-    if theme == "light":
+    if theme == "beige":
+        bg_gradient = "radial-gradient(circle at top, #faf7f2 0%, #ede6d6 100%)"
+        card_bg = "rgba(255, 255, 255, 0.95)"
+        card_border = "rgba(230, 223, 209, 0.9)"
+        text_color = "#26211c"
+        text_muted = "#6b6055"
+        search_box_bg = "rgba(255, 255, 255, 0.98)"
+        search_box_border = "rgba(213, 203, 186, 0.9)"
+        scratchpad_bg = "#ffffff"
+        scratchpad_border = "#e6dfd1"
+        shadow = "0 10px 30px rgba(80, 60, 40, 0.05)"
+    elif theme == "light":
         bg_gradient = "radial-gradient(circle at top, #f8fafc 0%, #e2e8f0 100%)"
         card_bg = "rgba(255, 255, 255, 0.9)"
         card_border = "rgba(0, 0, 0, 0.1)"
@@ -72,6 +84,7 @@ def get_start_page_html(theme="dark", accent="indigo"):
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Tab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {{
             --primary: {primary};
@@ -91,7 +104,7 @@ def get_start_page_html(theme="dark", accent="indigo"):
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Roboto Slab', -apple-system, serif;
             user-select: none;
         }}
         body {{

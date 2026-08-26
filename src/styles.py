@@ -63,10 +63,26 @@ THEME_PALETTES = {
         "border_light": "rgba(56, 189, 248, 0.25)",
         "bookmark_btn_bg": "#13233c",
         "bookmark_btn_hover": "#1d355c",
+    },
+    "beige": {
+        "bg_main": "#f7f4ed",
+        "bg_navbar": "#ffffff",
+        "bg_bookmarks": "#faf8f4",
+        "bg_input": "#ede7db",
+        "bg_tab": "#ede7db",
+        "bg_tab_active": "#ffffff",
+        "bg_tab_hover": "#f3eee4",
+        "text_main": "#26211c",
+        "text_muted": "#6b6055",
+        "border": "#e6dfd1",
+        "border_light": "rgba(0, 0, 0, 0.06)",
+        "bookmark_btn_bg": "#ffffff",
+        "bookmark_btn_hover": "#ede7db",
     }
 }
 
 ACCENT_COLORS = {
+    "bronze": "#9e6b43",
     "indigo": "#6366f1",
     "cyan": "#06b6d4",
     "emerald": "#10b981",

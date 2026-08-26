@@ -328,7 +328,13 @@ class ThemeSelectorDialog(QDialog):
         theme_layout = QHBoxLayout()
         theme_label = QLabel("Theme Mode:")
         self.theme_combo = QComboBox()
-        self.theme_combo.addItems(["Cyber Dark (dark)", "OLED Black (oled)", "Modern Light (light)", "Cyberpunk Neon (neon)"])
+        self.theme_combo.addItems([
+            "Warm Beige (beige)",
+            "Cyber Dark (dark)",
+            "OLED Black (oled)",
+            "Modern Light (light)",
+            "Cyberpunk Neon (neon)"
+        ])
         
         # Select current
         for i in range(self.theme_combo.count()):
@@ -342,7 +348,15 @@ class ThemeSelectorDialog(QDialog):
         accent_layout = QHBoxLayout()
         accent_label = QLabel("Accent Color:")
         self.accent_combo = QComboBox()
-        self.accent_combo.addItems(["Indigo (indigo)", "Cyan (cyan)", "Emerald (emerald)", "Rose (rose)", "Sunset (sunset)", "Purple (purple)"])
+        self.accent_combo.addItems([
+            "Warm Bronze (bronze)",
+            "Indigo (indigo)",
+            "Cyan (cyan)",
+            "Emerald (emerald)",
+            "Rose (rose)",
+            "Sunset (sunset)",
+            "Purple (purple)"
+        ])
         
         for i in range(self.accent_combo.count()):
             if f"({self.current_accent})" in self.accent_combo.itemText(i):
