@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Cool Browser Web - Online Simulator</title>
+    <title>My Cool Browser Pro - Web Simulator</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
+            --bg-main: #f7f4ed;
+            --bg-navbar: #ffffff;
+            --bg-bookmarks: #faf8f4;
+            --bg-input: #ede7db;
+            --bg-tab: #ede7db;
+            --bg-tab-active: #ffffff;
             --primary: #9e6b43;
-            --primary-glow: rgba(158, 107, 67, 0.35);
-            --bg-main: #0f1117;
-            --bg-navbar: #181a24;
-            --bg-bookmarks: #13151f;
-            --bg-input: #222536;
-            --bg-tab: #151722;
-            --bg-tab-active: #222536;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #2c3046;
+            --primary-glow: rgba(158, 107, 67, 0.25);
+            --text-main: #26211c;
+            --text-muted: #6b6055;
+            --border: #e6dfd1;
         }
 
         * {
@@ -75,14 +75,16 @@
 
         .tab.active {
             background-color: var(--bg-tab-active);
-            color: #ffffff;
+            color: var(--text-main);
             border-top: 2px solid var(--primary);
             font-weight: 600;
         }
 
-        .tab:hover:not(.active) {
-            background-color: #1d2030;
-            color: #e2e8f0;
+        .tab.pinned {
+            min-width: 44px;
+            max-width: 44px;
+            justify-content: center;
+            padding: 7px 8px;
         }
 
         .tab-title {
@@ -104,15 +106,15 @@
         }
 
         .tab-close:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.1);
+            color: var(--text-main);
         }
 
         .new-tab-btn {
-            background: #1e2235;
+            background: #ffffff;
             border: 1px solid var(--border);
             border-radius: 6px;
-            color: #cbd5e1;
+            color: var(--text-main);
             font-size: 14px;
             font-weight: bold;
             padding: 4px 10px;
@@ -147,8 +149,8 @@
         }
 
         .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-main);
             border-color: var(--border);
         }
 
@@ -161,7 +163,6 @@
             align-items: center;
             padding: 4px 14px;
             gap: 8px;
-            transition: border-color 0.2s ease;
         }
 
         .omnibox-wrapper:focus-within {
@@ -174,7 +175,7 @@
             background: transparent;
             border: none;
             outline: none;
-            color: #ffffff;
+            color: var(--text-main);
             font-size: 0.9rem;
             font-weight: 500;
             user-select: text;
@@ -184,7 +185,7 @@
             background: var(--bg-input);
             border: 1px solid var(--border);
             border-radius: 8px;
-            color: var(--text-muted);
+            color: var(--text-main);
             padding: 5px 12px;
             font-size: 0.8rem;
             font-weight: 600;
@@ -208,7 +209,7 @@
         }
 
         .bm-item {
-            background-color: #1e2235;
+            background-color: #ffffff;
             border: 1px solid var(--border);
             border-radius: 12px;
             color: var(--text-main);
@@ -230,7 +231,7 @@
             flex: 1;
             display: flex;
             position: relative;
-            background: radial-gradient(circle at top, #181828 0%, #0c0c14 100%);
+            background: radial-gradient(circle at top, #faf7f2 0%, #ede6d6 100%);
         }
 
         .view-pane {
@@ -255,10 +256,10 @@
 
         .dash-clock {
             font-size: 4rem;
-            font-weight: 200;
+            font-weight: 300;
             letter-spacing: 2px;
             margin-bottom: 4px;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            color: var(--text-main);
         }
 
         .dash-date {
@@ -270,14 +271,14 @@
         .dash-search-box {
             width: 100%;
             max-width: 600px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid var(--border);
             border-radius: 30px;
             padding: 8px 14px 8px 22px;
             display: flex;
             align-items: center;
             margin-bottom: 35px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(80, 60, 40, 0.05);
         }
 
         .dash-search-input {
@@ -285,7 +286,7 @@
             background: transparent;
             border: none;
             outline: none;
-            color: #ffffff;
+            color: var(--text-main);
             font-size: 1.05rem;
             user-select: text;
         }
@@ -310,8 +311,8 @@
         }
 
         .dash-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #ffffff;
+            border: 1px solid var(--border);
             border-radius: 14px;
             padding: 16px 10px;
             display: flex;
@@ -321,11 +322,11 @@
             font-size: 0.85rem;
             cursor: pointer;
             transition: transform 0.2s ease;
+            box-shadow: 0 6px 16px rgba(80, 60, 40, 0.03);
         }
 
         .dash-card:hover {
             transform: translateY(-4px);
-            background: rgba(255, 255, 255, 0.12);
             border-color: var(--primary);
         }
 
@@ -341,6 +342,37 @@
             background: #ffffff;
         }
 
+        /* AI Summarizer Sidebar */
+        .ai-sidebar {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 380px;
+            background: #ffffff;
+            border-left: 1px solid var(--border);
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            padding: 20px;
+            z-index: 500;
+        }
+
+        .ai-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .ai-content {
+            flex: 1;
+            overflow-y: auto;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: var(--text-main);
+        }
+
         /* Modal Overlay (Command Palette) */
         .modal-overlay {
             position: absolute;
@@ -348,8 +380,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(6px);
             display: none;
             align-items: flex-start;
             justify-content: center;
@@ -359,21 +391,21 @@
 
         .palette-box {
             width: 100%;
-            max-width: 540px;
-            background: #181a26;
+            max-width: 560px;
+            background: #ffffff;
             border: 1px solid var(--border);
             border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 20px 50px rgba(70, 50, 30, 0.2);
             overflow: hidden;
         }
 
         .palette-input {
             width: 100%;
-            background: #202434;
+            background: #faf8f4;
             border: none;
             border-bottom: 1px solid var(--border);
             padding: 14px 18px;
-            color: #ffffff;
+            color: var(--text-main);
             font-size: 1.05rem;
             outline: none;
             user-select: text;
@@ -393,9 +425,10 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            color: var(--text-main);
         }
 
-        .palette-item:hover, .palette-item.active {
+        .palette-item:hover {
             background: var(--primary);
             color: #ffffff;
         }
@@ -417,20 +450,27 @@
 
         <div class="omnibox-wrapper">
             <span>🔒</span>
-            <input class="omnibox-input" id="omnibox" type="text" placeholder="Search Google or type a URL..." onkeydown="handleOmniboxKey(event)">
+            <input class="omnibox-input" id="omnibox" type="text" placeholder="Search with keywords (yt, gh, w), math, or type a URL..." onkeydown="handleOmniboxKey(event)">
             <span>🛡️</span>
             <span style="color: #f59e0b; cursor: pointer;" onclick="bookmarkCurrentPage()">★</span>
         </div>
 
+        <button class="action-pill" onclick="toggleAISummarizer()">🤖 AI</button>
+        <button class="action-pill" onclick="captureScreenshot()">📸 Capture</button>
         <button class="action-pill" onclick="openCommandPalette()">⚡ Ctrl+K</button>
         <button class="action-pill" onclick="toggleSplitView()">🔲 Split</button>
         <button class="action-pill" onclick="toggleTheme()">🌗 Theme</button>
-        <a href="/" class="action-pill" style="text-decoration: none; background: #6366f1; color: white;">🏠 Landing Page</a>
+        <a href="/" class="action-pill" style="text-decoration: none; background: #26211c; color: white;">🏠 Landing Page</a>
     </div>
 
     <!-- Bookmarks Bar -->
     <div class="bookmarks-bar">
-        <span style="color: #f59e0b; font-weight: bold; font-size: 13px;">★</span>
+        <span style="color: #9e6b43; font-weight: bold; font-size: 13px;">🗂️ Workspaces:</span>
+        <button class="bm-item" onclick="setWorkspace('General')">General</button>
+        <button class="bm-item" onclick="setWorkspace('Work')">Work</button>
+        <button class="bm-item" onclick="setWorkspace('Dev')">Dev</button>
+        <span style="margin: 0 4px; color: var(--border);">|</span>
+        <span style="color: #f59e0b; font-weight: bold;">★</span>
         <button class="bm-item" onclick="navigateTo('https://www.google.com')">Google</button>
         <button class="bm-item" onclick="navigateTo('https://www.youtube.com')">YouTube</button>
         <button class="bm-item" onclick="navigateTo('https://github.com')">GitHub</button>
@@ -441,17 +481,35 @@
     <!-- Web Content Area -->
     <div class="content-area" id="content-area"></div>
 
+    <!-- AI Summarizer Sidebar -->
+    <div class="ai-sidebar" id="ai-sidebar">
+        <div class="ai-header">
+            <h3>🤖 AI Assistant</h3>
+            <button class="nav-btn" onclick="toggleAISummarizer()">✕</button>
+        </div>
+        <div class="ai-content" id="ai-content">
+            <h4>📄 Executive Summary</h4>
+            <p style="margin: 8px 0;">This webpage provides search and exploration capabilities across web articles, open-source repositories, and interactive media.</p>
+            <h4 style="margin-top: 14px;">🔑 Key Takeaways</h4>
+            <ul style="padding-left: 18px; margin-top: 6px;">
+                <li>Active session is running in private sandboxed environment.</li>
+                <li>Ad-blocking and tracking protection enabled.</li>
+                <li>Estimated reading time: ~2 minutes.</li>
+            </ul>
+        </div>
+    </div>
+
     <!-- Spotlight Command Palette Modal -->
     <div class="modal-overlay" id="palette-modal" onclick="closePaletteOnBg(event)">
         <div class="palette-box">
-            <input class="palette-input" id="palette-input" type="text" placeholder="Type a command or search..." oninput="filterPalette()" onkeydown="handlePaletteKey(event)">
+            <input class="palette-input" id="palette-input" type="text" placeholder="Type a command, search, or math calculation..." oninput="filterPalette()" onkeydown="handlePaletteKey(event)">
             <div class="palette-list" id="palette-list"></div>
         </div>
     </div>
 
     <script>
         var tabs = [
-            { id: 1, title: 'New Tab', url: 'about:blank', history: ['about:blank'], historyIdx: 0 }
+            { id: 1, title: 'New Tab', url: 'about:blank', history: ['about:blank'], historyIdx: 0, isPinned: false }
         ];
         var activeTabId = 1;
         var nextTabId = 2;
@@ -463,14 +521,18 @@
 
             tabs.forEach(function(tab) {
                 var tabEl = document.createElement('div');
-                tabEl.className = 'tab' + (tab.id === activeTabId ? ' active' : '');
+                tabEl.className = 'tab' + (tab.id === activeTabId ? ' active' : '') + (tab.isPinned ? ' pinned' : '');
                 tabEl.onclick = function() { switchTab(tab.id); };
 
-                tabEl.innerHTML = `
-                    <span>🌐</span>
-                    <span class="tab-title">${tab.title}</span>
-                    <span class="tab-close" onclick="event.stopPropagation(); closeTab(${tab.id});">✕</span>
-                `;
+                if (tab.isPinned) {
+                    tabEl.innerHTML = `<span>📌</span>`;
+                } else {
+                    tabEl.innerHTML = `
+                        <span>🌐</span>
+                        <span class="tab-title">${tab.title}</span>
+                        <span class="tab-close" onclick="event.stopPropagation(); closeTab(${tab.id});">✕</span>
+                    `;
+                }
                 container.appendChild(tabEl);
             });
         }
@@ -489,7 +551,7 @@
                             <div class="dash-date" id="dash-date">Thursday, August 27</div>
                             <div class="dash-search-box">
                                 <span style="margin-right: 10px;">🔍</span>
-                                <input class="dash-search-input" id="dash-search-input" type="text" placeholder="Search Google or enter a website..." onkeydown="handleDashSearch(event)">
+                                <input class="dash-search-input" id="dash-search-input" type="text" placeholder="Search Google, keyword (yt, gh), math (125*45)..." onkeydown="handleDashSearch(event)">
                                 <button class="dash-search-btn" onclick="executeDashSearch()">➜</button>
                             </div>
                             <div class="dash-shortcuts">
@@ -521,7 +583,7 @@
 
         function addNewTab(url = 'about:blank', title = 'New Tab') {
             var id = nextTabId++;
-            tabs.push({ id: id, title: title, url: url, history: [url], historyIdx: 0 });
+            tabs.push({ id: id, title: title, url: url, history: [url], historyIdx: 0, isPinned: false });
             activeTabId = id;
             renderTabs();
             renderContent();
@@ -534,6 +596,9 @@
         }
 
         function closeTab(id) {
+            var tab = tabs.find(t => t.id === id);
+            if (tab && tab.isPinned) return;
+
             if (tabs.length === 1) {
                 tabs[0].url = 'about:blank';
                 tabs[0].title = 'New Tab';
@@ -547,6 +612,14 @@
             }
             renderTabs();
             renderContent();
+        }
+
+        function togglePinTab(id) {
+            var tab = tabs.find(t => t.id === id);
+            if (tab) {
+                tab.isPinned = !tab.isPinned;
+                renderTabs();
+            }
         }
 
         function navigateTo(url) {
@@ -566,6 +639,31 @@
             if (e.key === 'Enter') {
                 var val = document.getElementById('omnibox').value.trim();
                 if (!val) return;
+
+                // Keyword search prefixes
+                var map = {
+                    'yt ': 'https://www.youtube.com/results?search_query=',
+                    'gh ': 'https://github.com/search?q=',
+                    'w ': 'https://en.wikipedia.org/wiki/Special:Search?search=',
+                    'r ': 'https://www.reddit.com/search/?q=',
+                    'ddg ': 'https://duckduckgo.com/?q=',
+                    'g ': 'https://www.google.com/search?q='
+                };
+                for (var k in map) {
+                    if (val.toLowerCase().startsWith(k)) {
+                        navigateTo(map[k] + encodeURIComponent(val.substring(k.length).trim()));
+                        return;
+                    }
+                }
+
+                // Math calculations
+                if (/^[0-9\.\+\-\*\/\(\)\%\s\^]+$/.test(val)) {
+                    try {
+                        var res = eval(val.replace('^', '**'));
+                        document.getElementById('omnibox').value = res;
+                        return;
+                    } catch(err) {}
+                }
 
                 if (val.indexOf('.') !== -1 && val.indexOf(' ') === -1) {
                     if (val.indexOf('http://') !== 0 && val.indexOf('https://') !== 0) {
@@ -590,13 +688,8 @@
             }
         }
 
-        function goHome() {
-            navigateTo('about:blank');
-        }
-
-        function reloadTab() {
-            renderContent();
-        }
+        function goHome() { navigateTo('about:blank'); }
+        function reloadTab() { renderContent(); }
 
         function historyBack() {
             var currTab = tabs.find(t => t.id === activeTabId);
@@ -634,17 +727,17 @@
         setInterval(updateDashClock, 1000);
 
         function toggleTheme() {
-            var isLight = document.body.style.getPropertyValue('--bg-main') === '#f1f5f9';
-            if (isLight) {
+            var isDark = document.body.style.getPropertyValue('--bg-main') === '#0f1117';
+            if (isDark) {
+                document.body.style.setProperty('--bg-main', '#f7f4ed');
+                document.body.style.setProperty('--bg-navbar', '#ffffff');
+                document.body.style.setProperty('--bg-input', '#ede7db');
+                document.body.style.setProperty('--text-main', '#26211c');
+            } else {
                 document.body.style.setProperty('--bg-main', '#0f1117');
                 document.body.style.setProperty('--bg-navbar', '#181a24');
                 document.body.style.setProperty('--bg-input', '#222536');
                 document.body.style.setProperty('--text-main', '#f8fafc');
-            } else {
-                document.body.style.setProperty('--bg-main', '#f1f5f9');
-                document.body.style.setProperty('--bg-navbar', '#ffffff');
-                document.body.style.setProperty('--bg-input', '#e2e8f0');
-                document.body.style.setProperty('--text-main', '#0f172a');
             }
         }
 
@@ -659,6 +752,19 @@
             } else {
                 renderContent();
             }
+        }
+
+        function toggleAISummarizer() {
+            var sb = document.getElementById('ai-sidebar');
+            sb.style.display = (sb.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function captureScreenshot() {
+            alert('📸 Screenshot captured and saved to downloads folder!');
+        }
+
+        function setWorkspace(name) {
+            alert('Switched to workspace: ' + name);
         }
 
         function openCommandPalette() {
@@ -677,12 +783,14 @@
             var q = document.getElementById('palette-input').value.toLowerCase();
             var list = document.getElementById('palette-list');
             var actions = [
+                { name: '🤖 Action: AI Web Page Summarizer', fn: 'toggleAISummarizer(); closePalette();' },
+                { name: '📸 Action: Capture Web Screenshot', fn: 'captureScreenshot(); closePalette();' },
+                { name: '📌 Action: Pin Active Tab', fn: 'togglePinTab(activeTabId); closePalette();' },
                 { name: '⚡ Action: Open New Tab', fn: 'addNewTab(); closePalette();' },
                 { name: '🔲 Action: Toggle Split View', fn: 'toggleSplitView(); closePalette();' },
-                { name: '🌗 Action: Toggle Dark / Light Theme', fn: 'toggleTheme(); closePalette();' },
-                { name: '🌐 Navigate: Google', fn: "navigateTo('https://www.google.com'); closePalette();" },
-                { name: '🐙 Navigate: GitHub', fn: "navigateTo('https://github.com'); closePalette();" },
-                { name: '▶️ Navigate: YouTube', fn: "navigateTo('https://www.youtube.com'); closePalette();" }
+                { name: '🌗 Action: Toggle Theme', fn: 'toggleTheme(); closePalette();' },
+                { name: '🌐 Search YouTube (yt)', fn: "document.getElementById('omnibox').value='yt '; document.getElementById('omnibox').focus(); closePalette();" },
+                { name: '🐙 Search GitHub (gh)', fn: "document.getElementById('omnibox').value='gh '; document.getElementById('omnibox').focus(); closePalette();" }
             ];
 
             list.innerHTML = '';
@@ -713,6 +821,9 @@
             } else if (e.ctrlKey && e.key.toLowerCase() === 'w') {
                 e.preventDefault();
                 closeTab(activeTabId);
+            } else if (e.ctrlKey && e.key.toLowerCase() === 'p') {
+                e.preventDefault();
+                togglePinTab(activeTabId);
             }
         };
 
