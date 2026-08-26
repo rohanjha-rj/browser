@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cool Browser Web - Online Simulator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.35);
+            --bg-main: #0f1117;
+            --bg-navbar: #181a24;
+            --bg-bookmarks: #13151f;
+            --bg-input: #222536;
+            --bg-tab: #151722;
+            --bg-tab-active: #222536;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #2c3046;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Top Tab Bar */
+        .tab-bar-strip {
+            background-color: var(--bg-main);
+            display: flex;
+            align-items: center;
+            padding: 6px 12px 0 12px;
+            gap: 4px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tabs-container {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            overflow-x: auto;
+        }
+
+        .tab {
+            background-color: var(--bg-tab);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            border-bottom: none;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            padding: 7px 14px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 120px;
+            max-width: 200px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab.active {
+            background-color: var(--bg-tab-active);
+            color: #ffffff;
+            border-top: 2px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .tab:hover:not(.active) {
+            background-color: #1d2030;
+            color: #e2e8f0;
+        }
+
+        .tab-title {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tab-close {
+            font-size: 11px;
+            color: var(--text-muted);
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tab-close:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
+
+        .new-tab-btn {
+            background: #1e2235;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 4px 10px;
+            cursor: pointer;
+            margin-bottom: 2px;
+        }
+
+        .new-tab-btn:hover {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: var(--bg-navbar);
+            display: flex;
+            align-items: center;
+            padding: 6px 12px;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            color: var(--text-muted);
+            padding: 6px 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border-color: var(--border);
+        }
+
+        .omnibox-wrapper {
+            flex: 1;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            padding: 4px 14px;
+            gap: 8px;
+            transition: border-color 0.2s ease;
+        }
+
+        .omnibox-wrapper:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-glow);
+        }
+
+        .omnibox-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 500;
+            user-select: text;
+        }
+
+        .action-pill {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-muted);
+            padding: 5px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .action-pill:hover {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        /* Bookmarks Bar */
+        .bookmarks-bar {
+            background-color: var(--bg-bookmarks);
+            display: flex;
+            align-items: center;
+            padding: 4px 14px;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .bm-item {
+            background-color: #1e2235;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-main);
+            padding: 3px 12px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .bm-item:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: #ffffff;
+        }
+
+        /* Web View Container / Splitter */
+        .content-area {
+            flex: 1;
+            display: flex;
+            position: relative;
+            background: radial-gradient(circle at top, #181828 0%, #0c0c14 100%);
+        }
+
+        .view-pane {
+            flex: 1;
+            height: 100%;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Start Page View */
+        .start-dashboard {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .dash-clock {
+            font-size: 4rem;
+            font-weight: 200;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .dash-date {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+
+        .dash-search-box {
+            width: 100%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            padding: 8px 14px 8px 22px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .dash-search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            font-size: 1.05rem;
+            user-select: text;
+        }
+
+        .dash-search-btn {
+            background: var(--primary);
+            border: none;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .dash-shortcuts {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .dash-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 16px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .dash-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--primary);
+        }
+
+        .dash-card .icon {
+            font-size: 1.8rem;
+        }
+
+        /* Web Iframe View */
+        .web-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #ffffff;
+        }
+
+        /* Modal Overlay (Command Palette) */
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 100px;
+            z-index: 1000;
+        }
+
+        .palette-box {
+            width: 100%;
+            max-width: 540px;
+            background: #181a26;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+        }
+
+        .palette-input {
+            width: 100%;
+            background: #202434;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            padding: 14px 18px;
+            color: #ffffff;
+            font-size: 1.05rem;
+            outline: none;
+            user-select: text;
+        }
+
+        .palette-list {
+            max-height: 280px;
+            overflow-y: auto;
+            padding: 6px;
+        }
+
+        .palette-item {
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .palette-item:hover, .palette-item.active {
+            background: var(--primary);
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Tab Strip -->
+    <div class="tab-bar-strip">
+        <div class="tabs-container" id="tabs-container"></div>
+        <button class="new-tab-btn" onclick="addNewTab()">＋</button>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <button class="nav-btn" onclick="historyBack()" title="Back">◀</button>
+        <button class="nav-btn" onclick="historyForward()" title="Forward">▶</button>
+        <button class="nav-btn" onclick="reloadTab()" title="Reload">🔄</button>
+        <button class="nav-btn" onclick="goHome()" title="Home">🏠</button>
+
+        <div class="omnibox-wrapper">
+            <span>🔒</span>
+            <input class="omnibox-input" id="omnibox" type="text" placeholder="Search Google or type a URL..." onkeydown="handleOmniboxKey(event)">
+            <span>🛡️</span>
+            <span style="color: #f59e0b; cursor: pointer;" onclick="bookmarkCurrentPage()">★</span>
+        </div>
+
+        <button class="action-pill" onclick="openCommandPalette()">⚡ Ctrl+K</button>
+        <button class="action-pill" onclick="toggleSplitView()">🔲 Split</button>
+        <button class="action-pill" onclick="toggleTheme()">🌗 Theme</button>
+        <a href="/" class="action-pill" style="text-decoration: none; background: #6366f1; color: white;">🏠 Landing Page</a>
+    </div>
+
+    <!-- Bookmarks Bar -->
+    <div class="bookmarks-bar">
+        <span style="color: #f59e0b; font-weight: bold; font-size: 13px;">★</span>
+        <button class="bm-item" onclick="navigateTo('https://www.google.com')">Google</button>
+        <button class="bm-item" onclick="navigateTo('https://www.youtube.com')">YouTube</button>
+        <button class="bm-item" onclick="navigateTo('https://github.com')">GitHub</button>
+        <button class="bm-item" onclick="navigateTo('https://www.wikipedia.org')">Wikipedia</button>
+        <button class="bm-item" onclick="navigateTo('https://chatgpt.com')">ChatGPT</button>
+    </div>
+
+    <!-- Web Content Area -->
+    <div class="content-area" id="content-area"></div>
+
+    <!-- Spotlight Command Palette Modal -->
+    <div class="modal-overlay" id="palette-modal" onclick="closePaletteOnBg(event)">
+        <div class="palette-box">
+            <input class="palette-input" id="palette-input" type="text" placeholder="Type a command or search..." oninput="filterPalette()" onkeydown="handlePaletteKey(event)">
+            <div class="palette-list" id="palette-list"></div>
+        </div>
+    </div>
+
+    <script>
+        var tabs = [
+            { id: 1, title: 'New Tab', url: 'about:blank', history: ['about:blank'], historyIdx: 0 }
+        ];
+        var activeTabId = 1;
+        var nextTabId = 2;
+        var isSplit = false;
+
+        function renderTabs() {
+            var container = document.getElementById('tabs-container');
+            container.innerHTML = '';
+
+            tabs.forEach(function(tab) {
+                var tabEl = document.createElement('div');
+                tabEl.className = 'tab' + (tab.id === activeTabId ? ' active' : '');
+                tabEl.onclick = function() { switchTab(tab.id); };
+
+                tabEl.innerHTML = `
+                    <span>🌐</span>
+                    <span class="tab-title">${tab.title}</span>
+                    <span class="tab-close" onclick="event.stopPropagation(); closeTab(${tab.id});">✕</span>
+                `;
+                container.appendChild(tabEl);
+            });
+        }
+
+        function renderContent() {
+            var area = document.getElementById('content-area');
+            var currTab = tabs.find(t => t.id === activeTabId) || tabs[0];
+            
+            document.getElementById('omnibox').value = currTab.url === 'about:blank' ? '' : currTab.url;
+
+            if (currTab.url === 'about:blank') {
+                area.innerHTML = `
+                    <div class="view-pane">
+                        <div class="start-dashboard">
+                            <div class="dash-clock" id="dash-clock">12:00</div>
+                            <div class="dash-date" id="dash-date">Thursday, August 27</div>
+                            <div class="dash-search-box">
+                                <span style="margin-right: 10px;">🔍</span>
+                                <input class="dash-search-input" id="dash-search-input" type="text" placeholder="Search Google or enter a website..." onkeydown="handleDashSearch(event)">
+                                <button class="dash-search-btn" onclick="executeDashSearch()">➜</button>
+                            </div>
+                            <div class="dash-shortcuts">
+                                <div class="dash-card" onclick="navigateTo('https://www.google.com')">
+                                    <div class="icon">🌐</div>
+                                    <span>Google</span>
+                                </div>
+                                <div class="dash-card" onclick="navigateTo('https://www.youtube.com')">
+                                    <div class="icon">▶️</div>
+                                    <span>YouTube</span>
+                                </div>
+                                <div class="dash-card" onclick="navigateTo('https://github.com')">
+                                    <div class="icon">🐙</div>
+                                    <span>GitHub</span>
+                                </div>
+                                <div class="dash-card" onclick="navigateTo('https://chatgpt.com')">
+                                    <div class="icon">💬</div>
+                                    <span>ChatGPT</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                updateDashClock();
+            } else {
+                area.innerHTML = `<iframe class="web-frame" src="${currTab.url}"></iframe>`;
+            }
+        }
+
+        function addNewTab(url = 'about:blank', title = 'New Tab') {
+            var id = nextTabId++;
+            tabs.push({ id: id, title: title, url: url, history: [url], historyIdx: 0 });
+            activeTabId = id;
+            renderTabs();
+            renderContent();
+        }
+
+        function switchTab(id) {
+            activeTabId = id;
+            renderTabs();
+            renderContent();
+        }
+
+        function closeTab(id) {
+            if (tabs.length === 1) {
+                tabs[0].url = 'about:blank';
+                tabs[0].title = 'New Tab';
+                renderTabs();
+                renderContent();
+                return;
+            }
+            tabs = tabs.filter(t => t.id !== id);
+            if (activeTabId === id) {
+                activeTabId = tabs[tabs.length - 1].id;
+            }
+            renderTabs();
+            renderContent();
+        }
+
+        function navigateTo(url) {
+            var currTab = tabs.find(t => t.id === activeTabId);
+            if (!currTab) return;
+
+            currTab.url = url;
+            currTab.title = url.replace('https://', '').replace('http://', '').split('/')[0] || 'Website';
+            currTab.history.push(url);
+            currTab.historyIdx = currTab.history.length - 1;
+
+            renderTabs();
+            renderContent();
+        }
+
+        function handleOmniboxKey(e) {
+            if (e.key === 'Enter') {
+                var val = document.getElementById('omnibox').value.trim();
+                if (!val) return;
+
+                if (val.indexOf('.') !== -1 && val.indexOf(' ') === -1) {
+                    if (val.indexOf('http://') !== 0 && val.indexOf('https://') !== 0) {
+                        navigateTo('https://' + val);
+                    } else {
+                        navigateTo(val);
+                    }
+                } else {
+                    navigateTo('https://www.google.com/search?q=' + encodeURIComponent(val));
+                }
+            }
+        }
+
+        function handleDashSearch(e) {
+            if (e.key === 'Enter') executeDashSearch();
+        }
+
+        function executeDashSearch() {
+            var val = document.getElementById('dash-search-input').value.trim();
+            if (val) {
+                navigateTo('https://www.google.com/search?q=' + encodeURIComponent(val));
+            }
+        }
+
+        function goHome() {
+            navigateTo('about:blank');
+        }
+
+        function reloadTab() {
+            renderContent();
+        }
+
+        function historyBack() {
+            var currTab = tabs.find(t => t.id === activeTabId);
+            if (currTab && currTab.historyIdx > 0) {
+                currTab.historyIdx--;
+                currTab.url = currTab.history[currTab.historyIdx];
+                renderTabs();
+                renderContent();
+            }
+        }
+
+        function historyForward() {
+            var currTab = tabs.find(t => t.id === activeTabId);
+            if (currTab && currTab.historyIdx < currTab.history.length - 1) {
+                currTab.historyIdx++;
+                currTab.url = currTab.history[currTab.historyIdx];
+                renderTabs();
+                renderContent();
+            }
+        }
+
+        function updateDashClock() {
+            var el = document.getElementById('dash-clock');
+            var dateEl = document.getElementById('dash-date');
+            if (el) {
+                var now = new Date();
+                var h = String(now.getHours()).padStart(2, '0');
+                var m = String(now.getMinutes()).padStart(2, '0');
+                el.innerText = h + ':' + m;
+                if (dateEl) {
+                    dateEl.innerText = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+                }
+            }
+        }
+        setInterval(updateDashClock, 1000);
+
+        function toggleTheme() {
+            var isLight = document.body.style.getPropertyValue('--bg-main') === '#f1f5f9';
+            if (isLight) {
+                document.body.style.setProperty('--bg-main', '#0f1117');
+                document.body.style.setProperty('--bg-navbar', '#181a24');
+                document.body.style.setProperty('--bg-input', '#222536');
+                document.body.style.setProperty('--text-main', '#f8fafc');
+            } else {
+                document.body.style.setProperty('--bg-main', '#f1f5f9');
+                document.body.style.setProperty('--bg-navbar', '#ffffff');
+                document.body.style.setProperty('--bg-input', '#e2e8f0');
+                document.body.style.setProperty('--text-main', '#0f172a');
+            }
+        }
+
+        function toggleSplitView() {
+            var area = document.getElementById('content-area');
+            isSplit = !isSplit;
+            if (isSplit) {
+                area.innerHTML = `
+                    <iframe class="web-frame" src="https://www.google.com" style="width: 50%; border-right: 2px solid var(--border);"></iframe>
+                    <iframe class="web-frame" src="https://github.com" style="width: 50%;"></iframe>
+                `;
+            } else {
+                renderContent();
+            }
+        }
+
+        function openCommandPalette() {
+            document.getElementById('palette-modal').style.display = 'flex';
+            document.getElementById('palette-input').focus();
+            filterPalette();
+        }
+
+        function closePaletteOnBg(e) {
+            if (e.target.id === 'palette-modal') {
+                document.getElementById('palette-modal').style.display = 'none';
+            }
+        }
+
+        function filterPalette() {
+            var q = document.getElementById('palette-input').value.toLowerCase();
+            var list = document.getElementById('palette-list');
+            var actions = [
+                { name: '⚡ Action: Open New Tab', fn: 'addNewTab(); closePalette();' },
+                { name: '🔲 Action: Toggle Split View', fn: 'toggleSplitView(); closePalette();' },
+                { name: '🌗 Action: Toggle Dark / Light Theme', fn: 'toggleTheme(); closePalette();' },
+                { name: '🌐 Navigate: Google', fn: "navigateTo('https://www.google.com'); closePalette();" },
+                { name: '🐙 Navigate: GitHub', fn: "navigateTo('https://github.com'); closePalette();" },
+                { name: '▶️ Navigate: YouTube', fn: "navigateTo('https://www.youtube.com'); closePalette();" }
+            ];
+
+            list.innerHTML = '';
+            actions.filter(a => a.name.toLowerCase().includes(q)).forEach(a => {
+                var el = document.createElement('div');
+                el.className = 'palette-item';
+                el.innerText = a.name;
+                el.onclick = function() { eval(a.fn); };
+                list.appendChild(el);
+            });
+        }
+
+        function closePalette() {
+            document.getElementById('palette-modal').style.display = 'none';
+        }
+
+        function handlePaletteKey(e) {
+            if (e.key === 'Escape') closePalette();
+        }
+
+        window.onkeydown = function(e) {
+            if (e.ctrlKey && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                openCommandPalette();
+            } else if (e.ctrlKey && e.key.toLowerCase() === 't') {
+                e.preventDefault();
+                addNewTab();
+            } else if (e.ctrlKey && e.key.toLowerCase() === 'w') {
+                e.preventDefault();
+                closeTab(activeTabId);
+            }
+        };
+
+        // Initialize
+        renderTabs();
+        renderContent();
+    </script>
+</body>
+</html>
